@@ -44,7 +44,7 @@ const renderField = ({ input, name, label, type, placeholder, meta: { touched, e
 )
 
 const Signup = (props) => {
-  const { handleSubmit, isFetching } = props;
+  const { handleSubmit, isFetching, error } = props;
 
   return (
     <div className="container">
@@ -53,12 +53,14 @@ const Signup = (props) => {
         <Field name="email" component={renderField} type="email" placeholder="usuario@gmail.com" label="E-mail" />
         <Field name="password" component={renderField} type="password" placeholder="******" label="Senha" />
         <Field name="passwordConfirmation" component={renderField} type="password" placeholder="******" label="Repetir senha" />
-
+        {error && <span className="text-danger">{error}</span>}
         <div className="d-flex justify-content-center">
           <Link to="/login">
             <button type="button" className="btn btn-secondary m-3">Cancelar</button>
           </Link>
-          <button type="submit" className="btn btn-primary m-3" disabled={isFetching}>Cadastrar</button>
+          <button type="submit" className="btn btn-primary m-3" disabled={isFetching}>
+            {isFetching && <i class="fa fa-spinner fa-spin"></i>}Cadastrar
+          </button>
         </div>
       </form>
       <Notification />

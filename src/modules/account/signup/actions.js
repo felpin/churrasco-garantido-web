@@ -1,4 +1,4 @@
-import { reset } from 'redux-form';
+import { SubmissionError, reset } from 'redux-form';
 import { toast } from 'react-toastify';
 import {
   ACCOUNT_CREATION_FAILURE,
@@ -23,45 +23,34 @@ export const signupFailure = () => ({
 export const signup = ({ email, password }) => (dispatch) => {
   dispatch(signupRequest());
 
-  createAccountInApi(email, password)
+  return createAccountInApi(email, password)
     .then((response) => {
       if (response.ok) {
-        dispatch(signupSuccess());
-        dispatch(reset('signup'));
-        toast.success('Usuário criado com sucesso. Você será redirecionado para o login.');
-
-        setTimeout(() => {
-          window.location.replace('/login');
-        }, 2000);
+        console.log('sucesso')
         return;
       }
 
-      const status = response.status;
-      if (status === 422) {
-        response
-          .json()
-          .then((error) => {
-            if (error && error.name) {
-              switch (error.name) {
-                case 'DuplicatedUsernameError':
-                  toast.error(`O usuário ${error.username} não está disponível para criação`);
-                  break;
-                case 'WeakPasswordError':
-                  toast.error('A senha não está de acordo com as políticas de segurança');
-                  break;
-              }
-            }
-
-            dispatch(signupFailure());
-          })
-          .catch(() => dispatch(signupFailure()));
-      } else {
-        toast.error('Ocorreu um erro no servidor');
-        dispatch(signupFailure());
-      }
+      return response.json().then(error => Promise.reject(error));
     })
-    .catch(() => {
-      toast.error('Ocorreu um erro no servidor');
+    .then(() => {
+      dispatch(signupSuccess());
+      dispatch(reset('signup'));
+      toast.success('Usuário criado com sucesso. Você será redirecionado para o login.');
+
+      setTimeout(() => {
+        window.location.replace('/login');
+      }, 3000);
+    })
+    .catch((error) => {
       dispatch(signupFailure());
+
+      switch (error.name) {
+        case 'DuplicatedUsernameError':
+          throw new SubmissionError({ email: `O usuário ${error.username} não está disponível para cadastro` });
+        case 'WeakPasswordError':
+          throw new SubmissionError({ password: 'A senha não está de acordo com as políticas de segurança' });
+        default:
+          throw new SubmissionError({ _error: 'Ocorreu um erro ao realizar a requisição' });
+      }
     })
 };
