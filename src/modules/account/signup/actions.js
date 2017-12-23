@@ -37,7 +37,7 @@ export const signup = ({ email, password }) => (dispatch) => {
       toast.success('Usuário criado com sucesso. Você será redirecionado para o login.');
 
       setTimeout(() => {
-        window.location.replace('/login');
+        window.location = '/login';
       }, 3000);
     })
     .catch((error) => {
