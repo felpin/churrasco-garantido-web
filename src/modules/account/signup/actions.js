@@ -26,7 +26,6 @@ export const signup = ({ email, password }) => (dispatch) => {
   return createAccountInApi(email, password)
     .then((response) => {
       if (response.ok) {
-        console.log('sucesso')
         return;
       }
 
