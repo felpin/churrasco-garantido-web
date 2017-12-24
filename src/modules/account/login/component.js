@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import Notification from '../../shared/notification/component';
 
 const validate = values => {
   const errors = {}
@@ -47,7 +46,6 @@ const Signup = (props) => {
           </button>
         </div>
       </form>
-      <Notification />
     </div>
   );
 };

@@ -1,11 +1,8 @@
 import { SubmissionError, reset } from 'redux-form';
-import {
-  LOGIN_FAILURE,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS
-} from './types';
-
 import loginInApi from './api';
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from './types';
+import { setToken } from '../../../utils/auth'
+
 
 export const loginRequest = () => ({
   type: LOGIN_REQUEST
@@ -35,7 +32,7 @@ export const login = ({ email, password }) => (dispatch) => {
       dispatch(loginSuccess());
       dispatch(reset('login'));
 
-      sessionStorage.setItem('token', token);
+      setToken(token);
 
       window.location = '/dashboard';
     })
