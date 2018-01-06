@@ -42,7 +42,7 @@ const Signup = (props) => {
             <button type="button" className="btn btn-link m-3">Nova conta</button>
           </Link>
           <button type="submit" className="btn btn-primary m-3" disabled={isFetching}>
-            {isFetching && <i class="fa fa-spinner fa-spin"></i>}Login
+            {isFetching && <i className="fa fa-spinner fa-spin"></i>}Login
           </button>
         </div>
       </form>
