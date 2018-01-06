@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
             <Link to="/dashboard" className="nav-item nav-link">Dashboard</Link>
-            <Link to="/dashboard" className="nav-item nav-link disabled">Cadastrar nova empresa</Link>
+            <Link to="/empresa/criar" className="nav-item nav-link">Cadastrar nova empresa</Link>
             <Link to="/dashboard" className="nav-item nav-link disabled">Novo pedido</Link>
             <Link to="/dashboard" className="nav-item nav-link disabled">Minha conta</Link>
             <Link to="/dashboard" className="nav-item nav-link disabled">Sair</Link>
