@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import loginReducer, * as loginSelectors from './account/login/reducer'
-import signupReducer, * as signupSelectors from './account/signup/reducer'
-import dashboardReducer, * as dashboardSelectors from './dashboard/reducer'
+import loginReducer, * as loginSelectors from './account/login/reducer';
+import signupReducer, * as signupSelectors from './account/signup/reducer';
+import dashboardReducer, * as dashboardSelectors from './dashboard/reducer';
 
 const reducers = {
   dashboard: dashboardReducer,
