@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
           <div className="navbar-nav">
             <Link to="/dashboard" className="nav-item nav-link">Dashboard</Link>
             <Link to="/empresa/criar" className="nav-item nav-link">Cadastrar nova empresa</Link>
-            <Link to="/dashboard" className="nav-item nav-link disabled">Novo pedido</Link>
+            <Link to="/pedido/criar" className="nav-item nav-link">Novo pedido</Link>
             <Link to="/dashboard" className="nav-item nav-link disabled">Minha conta</Link>
             <Link to="/dashboard" className="nav-item nav-link disabled">Sair</Link>
           </div>

@@ -4,8 +4,9 @@ import Login from './modules/account/login/container';
 import Signup from './modules/account/signup/container';
 import CompanyCreation from './modules/company/create/container';
 import Dashboard from './modules/dashboard/container';
-import Layout from './modules/shared/layout/component'
-import { isAuthenticated } from './utils/auth'
+import OrderCreation from './modules/order/create/container';
+import Layout from './modules/shared/layout/component';
+import { isAuthenticated } from './utils/auth';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
@@ -22,6 +23,7 @@ export default (
       <Layout>
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/empresa/criar" component={CompanyCreation} />
+        <PrivateRoute exact path="/pedido/criar" component={OrderCreation} />
       </Layout>
       {/* TODO: Add 404 route */}
     </Switch>
