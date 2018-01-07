@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { CNPJ } from 'cpf_cnpj';
 
 function renderErrorMessage() {
-  return <h3 class='text-center'>Ocorreu um erro ao buscar as informações do dashboard</h3>
+  return <h3 className='text-center'>Ocorreu um erro ao buscar as informações do dashboard</h3>
 }
 
 function renderLoadingMessage() {
-  return <h3 class='text-center'>Carregando...</h3>
+  return <h3 className='text-center'>Carregando...</h3>
 }
 
 function renderNoCompanyMessage() {
-  return <h3 class='text-center'>Você não possui empresa cadastrada</h3>
+  return <h3 className='text-center'>Você não possui empresa cadastrada</h3>
 }
 
 class Dashboard extends Component {
@@ -33,7 +33,7 @@ class Dashboard extends Component {
     const { summary } = this.props;
 
     return (
-      <table class="table table-striped">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th scope="col" className="text-center">Nome fantasia</th>
