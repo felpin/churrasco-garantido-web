@@ -43,7 +43,7 @@ class Dashboard extends Component {
         </thead>
         <tbody>
           {summary.map(summaryItem =>
-            <tr>
+            <tr key={summaryItem.cnpj}>
               <td>{summaryItem.name}</td>
               <td>{CNPJ.format(summaryItem.cnpj)}</td>
               <td>{summaryItem.orders}</td>
