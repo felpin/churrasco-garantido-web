@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Login from './modules/account/login/container';
+import Logout from './modules/account/logout/component';
 import Signup from './modules/account/signup/container';
 import CompanyCreation from './modules/company/create/container';
 import Dashboard from './modules/dashboard/container';
@@ -15,12 +16,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )} />
 )
 
+const RedirectToDashboard = () => (<Redirect to="/dashboard" />);
+
 export default (
   <BrowserRouter basename="/" >
     <Switch>
-      <Route exact path="/" component={Login} />
+      <Route exact path="/" component={isAuthenticated() ? RedirectToDashboard : Login} />
+      {/* TODO: Login should redirect to dashboard if authenticated */}
       <Route exact path="/login" component={Login} />
-      <Route exact path="/conta/criar" component={Signup} />
+      <Route exact path="/logout" component={Logout} />
+      <Route exact path="/conta/criar" component={isAuthenticated() ? RedirectToDashboard : Signup} />
       <Layout>
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/empresa/criar" component={CompanyCreation} />
