@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { CNPJ } from 'cpf_cnpj';
 
@@ -45,8 +46,11 @@ class Dashboard extends Component {
           {summary.map(summaryItem =>
             <tr key={summaryItem.cnpj}>
               <td>{summaryItem.name}</td>
-              <td>{CNPJ.format(summaryItem.cnpj)}</td>
-              <td>{summaryItem.orders}</td>
+              <td className="text-center">{CNPJ.format(summaryItem.cnpj)}</td>
+              <td className="text-right">
+                {!summaryItem.orders && 'Nenhum'}
+                {!!summaryItem.orders && <Link to={`/empresa/${summaryItem.cnpj}/pedidos`}>{summaryItem.orders}</Link>}
+              </td>
             </tr>
           )}
         </tbody>
