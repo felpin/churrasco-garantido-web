@@ -5,7 +5,7 @@ import { CNPJ } from "cpf_cnpj";
 import normalizeCnpj from '../../../utils/normalize/cnpj';
 
 const validate = values => {
-  const errors = {}
+  const errors = {};
 
   if (!values.name) {
     errors.name = 'O nome fantasia é obrigatório';

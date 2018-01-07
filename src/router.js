@@ -4,8 +4,8 @@ import Login from './modules/account/login/container';
 import Signup from './modules/account/signup/container';
 import CompanyCreation from './modules/company/create/container';
 import Dashboard from './modules/dashboard/container';
-import Layout from './modules/shared/layout/component'
-import { isAuthenticated } from './utils/auth'
+import Layout from './modules/shared/layout/component';
+import { isAuthenticated } from './utils/auth';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
