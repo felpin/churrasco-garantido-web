@@ -5,6 +5,7 @@ import Signup from './modules/account/signup/container';
 import CompanyCreation from './modules/company/create/container';
 import Dashboard from './modules/dashboard/container';
 import OrderCreation from './modules/order/create/container';
+import OrderList from './modules/order/list/container';
 import Layout from './modules/shared/layout/component';
 import { isAuthenticated } from './utils/auth';
 
@@ -23,6 +24,7 @@ export default (
       <Layout>
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/empresa/criar" component={CompanyCreation} />
+        <PrivateRoute exact path="/empresa/:cnpj/pedidos" component={OrderList} />
         <PrivateRoute exact path="/pedido/criar" component={OrderCreation} />
       </Layout>
       {/* TODO: Add 404 route */}
