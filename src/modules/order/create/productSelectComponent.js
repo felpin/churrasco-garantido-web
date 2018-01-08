@@ -1,9 +1,9 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, propTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
-const validate = values => {
-  const errors = {}
+const validate = (values) => {
+  const errors = {};
 
   if (!values.product) {
     errors.product = 'A seleção do produto é obrigatória';
@@ -17,18 +17,26 @@ const validate = values => {
     errors.quantity = 'A quantidade deve ser maior que 0';
   }
 
-  return errors
-}
+  return errors;
+};
 
 const renderSelect = ({ input, name, meta: { touched, error }, children }) => (
-  <select {...input} id={name} className={"form-control custom-select " + (touched && error ? "border-danger" : "")}>
+  <select {...input} id={name} className={`form-control custom-select${(touched && error ? ' border-danger' : '')}`}>
     {children}
   </select>
 );
 
+renderSelect.propTypes = {
+  ...propTypes,
+};
+
 const renderProductQuantity = ({ input, name, meta: { touched, error } }) => (
-  <input {...input} id={name} className={"col-sm-1 form-control " + (touched && error ? "border-danger" : "")} type="number" min="1" />
+  <input {...input} id={name} className={`col-sm-1 form-control${(touched && error ? ' border-danger' : '')}`} type="number" min="1" />
 );
+
+renderProductQuantity.propTypes = {
+  ...propTypes,
+};
 
 const ProductSelect = ({ handleSubmit, products, reset }) => {
   const SELECT_PRODUCT_NAME = 'product';
@@ -45,7 +53,7 @@ const ProductSelect = ({ handleSubmit, products, reset }) => {
     <form className="form-add-product form-inline" onSubmit={handleSubmitAndResetForm}>
       <label htmlFor={SELECT_PRODUCT_NAME} className="col-sm-1 offset-sm-2">Produto:</label>
       <Field name={SELECT_PRODUCT_NAME} component={renderSelect}>
-        <option value=''>Selecione um produto...</option>
+        <option value="">Selecione um produto...</option>
         {productsSorted.map(product => <option key={product} value={product}>{product}</option>)}
       </Field>
 
@@ -58,8 +66,9 @@ const ProductSelect = ({ handleSubmit, products, reset }) => {
 };
 
 ProductSelect.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   products: PropTypes.arrayOf(PropTypes.string).isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
 export default reduxForm({

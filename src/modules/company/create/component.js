@@ -1,10 +1,10 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, propTypes } from 'redux-form';
 import PropTypes from 'prop-types';
-import { CNPJ } from "cpf_cnpj";
+import { CNPJ } from 'cpf_cnpj';
 import normalizeCnpj from '../../../utils/normalize/cnpj';
 
-const validate = values => {
+const validate = (values) => {
   const errors = {};
 
   if (!values.name) {
@@ -14,11 +14,11 @@ const validate = values => {
   if (!values.cnpj) {
     errors.cnpj = 'O CNPJ é obrigatório';
   } else if (!CNPJ.isValid(values.cnpj)) {
-    errors.cnpj = 'Este CNPJ é inválido'
+    errors.cnpj = 'Este CNPJ é inválido';
   }
 
-  return errors
-}
+  return errors;
+};
 
 // TODO: Extract to shared component
 const renderField = ({ input, name, label, type, placeholder, meta: { touched, error } }) => (
@@ -29,7 +29,9 @@ const renderField = ({ input, name, label, type, placeholder, meta: { touched, e
       {touched && error && <span className="text-danger">{error}</span>}
     </div>
   </div>
-)
+);
+
+renderField.propTypes = { ...propTypes };
 
 const CompanyCreation = (props) => {
   const { handleSubmit, isFetching, error } = props;
@@ -38,12 +40,25 @@ const CompanyCreation = (props) => {
     <div className="container">
       <h2 className="text-center pt-5">Cadastro de Empresa</h2>
       <form className="form-company-creation" onSubmit={handleSubmit}>
-        <Field name="name" component={renderField} type="text" placeholder="Taller" label="Nome fantasia" />
-        <Field name="cnpj" component={renderField} type="text" placeholder="12.819.834/0001-02" label="CNPJ" normalize={normalizeCnpj} />
+        <Field
+          name="name"
+          component={renderField}
+          type="text"
+          placeholder="Taller"
+          label="Nome fantasia"
+        />
+        <Field
+          name="cnpj"
+          component={renderField}
+          type="text"
+          placeholder="12.819.834/0001-02"
+          label="CNPJ"
+          normalize={normalizeCnpj}
+        />
         {error && <span className="text-danger">{error}</span>}
         <div className="d-flex justify-content-center">
           <button type="submit" className="btn btn-primary m-3" disabled={isFetching}>
-            {isFetching && <i className="fa fa-spinner fa-spin"></i>}Cadastrar
+            {isFetching && <i className="fa fa-spinner fa-spin" />}Cadastrar
           </button>
         </div>
       </form>
@@ -53,7 +68,8 @@ const CompanyCreation = (props) => {
 
 CompanyCreation.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 export default reduxForm({

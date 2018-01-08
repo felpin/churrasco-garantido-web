@@ -21,7 +21,8 @@ import {
 
 const companyAndProductListFailure = { type: COMPANY_AND_PRODUCT_LIST_FAILURE };
 const companyAndProductListRequest = { type: COMPANY_AND_PRODUCT_LIST_REQUEST };
-const companyAndProductListSuccess = (companies, products) => ({ type: COMPANY_AND_PRODUCT_LIST_SUCCESS, companies, products });
+const companyAndProductListSuccess =
+  (companies, products) => ({ type: COMPANY_AND_PRODUCT_LIST_SUCCESS, companies, products });
 
 const orderCreateFailure = { type: ORDER_CREATE_FAILURE };
 const orderCreateRequest = { type: ORDER_CREATE_REQUEST };
@@ -62,17 +63,18 @@ export const createOrder = ({ cnpj, order }) => (dispatch) => {
     return;
   }
 
-  const products = order.map(orderItem => ({ name: orderItem.product, quantity: orderItem.quantity }));
+  const products =
+    order.map(orderItem => ({ name: orderItem.product, quantity: orderItem.quantity }));
 
   dispatch(orderCreateRequest);
 
-  return createNewOrderInApi({ cnpj, products })
+  createNewOrderInApi({ cnpj, products })
     .then((response) => {
       if (response.ok) {
         return;
       }
 
-      return response.json().then(error => Promise.reject(error));
+      response.json().then(error => Promise.reject(error));
     })
     .then(() => {
       dispatch(orderCreateSuccess);
@@ -85,7 +87,8 @@ export const createOrder = ({ cnpj, order }) => (dispatch) => {
     });
 };
 
-export const addProductToOrder = ({ product, quantity }) => ({ type: ADD_PRODUCT_TO_ORDER, product, quantity: parseInt(quantity, 10) });
+export const addProductToOrder = ({ product, quantity }) =>
+  ({ type: ADD_PRODUCT_TO_ORDER, product, quantity: parseInt(quantity, 10) });
 export const changeCompany = cnpj => (dispatch) => {
   dispatch({ type: CHANGE_COMPANY_IN_ORDER, cnpj });
   dispatch({ type: HIDE_COMPANY_REQUIRED });

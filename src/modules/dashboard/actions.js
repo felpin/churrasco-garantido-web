@@ -2,10 +2,10 @@ import getSummaryFromApi from './api';
 import { SUMMARY_FAILURE, SUMMARY_REQUEST, SUMMARY_SUCCESS } from './types';
 
 export const summaryRequest = () => ({
-  type: SUMMARY_REQUEST
+  type: SUMMARY_REQUEST,
 });
 
-export const summarySuccess = (summary) => ({
+export const summarySuccess = summary => ({
   type: SUMMARY_SUCCESS,
   summary,
 });
@@ -28,7 +28,7 @@ export const getSummary = () => (dispatch) => {
     .then((summary) => {
       dispatch(summarySuccess(summary));
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch(summaryFailure());
     });
-}
+};

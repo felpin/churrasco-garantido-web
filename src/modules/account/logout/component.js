@@ -6,6 +6,6 @@ const Logout = () => {
   removeToken();
 
   return (<Redirect to="/login" />);
-}
+};
 
 export default Logout;

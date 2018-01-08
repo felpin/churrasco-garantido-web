@@ -6,15 +6,15 @@ import ProductSelect from './productSelectComponent';
 import ShoppingCart from './shoppingCartComponent';
 
 function renderErrorMessage() {
-  return <h3 className='text-center'>Ocorreu um erro ao buscar as empresas e produtos</h3>
+  return <h3 className="text-center">Ocorreu um erro ao buscar as empresas e produtos</h3>;
 }
 
 function renderLoadingMessage() {
-  return <h3 className='text-center'>Carregando...</h3>
+  return <h3 className="text-center">Carregando...</h3>;
 }
 
 function renderNoCompanyOrProductMessage() {
-  return <h3 className='text-center'>Não há empresas ou produtos para criar um pedido</h3>
+  return <h3 className="text-center">Não há empresas ou produtos para criar um pedido</h3>;
 }
 
 class OrderCreation extends Component {
@@ -56,32 +56,41 @@ class OrderCreation extends Component {
       showCompanyRequired,
     } = this.props;
 
-    let main = (<div></div>);
+    function onChangeCompany(event) {
+      handleCompanyChange(event.target.value);
+    }
+
+    function submitOrder() {
+      createOrder({ cnpj: companySelected, order });
+    }
+
+    let main = (<div />);
     if (isFetchingProductsAndCompanies) {
       main = renderLoadingMessage();
     } else if (couldFetchProductsAndCompanies) {
-      function onChangeCompany(event) {
-        handleCompanyChange(event.target.value);
-      }
-
-      function submitOrder() {
-        createOrder({ cnpj: companySelected, order });
-      }
-
       main = this.hasCompany() && this.hasProduct() ?
-        <div>
-          <CompanySelect companies={companies} onChange={onChangeCompany} selected={companySelected} showCompanyRequired={showCompanyRequired} />
-          <ProductSelect products={products} onSubmit={addProductToOrder} />
-          <ShoppingCart order={order} removeItem={removeProduct} onSubmit={submitOrder} />
-          {!!order.length && <button
-            type="button"
-            className="btn btn-primary my-3 mx-3"
-            onClick={submitOrder}
-            disabled={isCreatingOrder}
-          >
-            {isCreatingOrder && <i className="fa fa-spinner fa-spin"></i>}Finalizar pedido
-          </button>}
-        </div>
+        (
+          <div>
+            <CompanySelect
+              companies={companies}
+              onChange={onChangeCompany}
+              selected={companySelected}
+              showCompanyRequired={showCompanyRequired}
+            />
+            <ProductSelect products={products} onSubmit={addProductToOrder} />
+            <ShoppingCart order={order} removeItem={removeProduct} onSubmit={submitOrder} />
+            {!!order.length &&
+              <button
+                type="button"
+                className="btn btn-primary my-3 mx-3"
+                onClick={submitOrder}
+                disabled={isCreatingOrder}
+              >
+                {isCreatingOrder && <i className="fa fa-spinner fa-spin" />}Finalizar pedido
+              </button>
+            }
+          </div>
+        )
         : renderNoCompanyOrProductMessage();
     } else {
       main = renderErrorMessage();

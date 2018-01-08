@@ -14,6 +14,37 @@ import {
   SHOW_COMPANY_REQUIRED,
 } from './types';
 
+function addProductToOrder(product, quantity, order) {
+  const productIndex = order.findIndex(orderItem => orderItem.product === product);
+  const isProductInOrder = productIndex !== -1;
+
+  if (isProductInOrder) {
+    const oldQuantity = order[productIndex].quantity;
+
+    return [
+      ...order.slice(0, productIndex),
+      { product, quantity: oldQuantity + quantity },
+      ...order.slice(productIndex + 1),
+    ];
+  }
+
+  return [...order, { product, quantity }];
+}
+
+function removeProductFromOrder(product, order) {
+  const productIndex = order.findIndex(orderItem => orderItem.product === product);
+  const isProductInOrder = productIndex !== -1;
+
+  if (isProductInOrder) {
+    return [
+      ...order.slice(0, productIndex),
+      ...order.slice(productIndex + 1),
+    ];
+  }
+
+  return order;
+}
+
 const companies = (state = [], action) => {
   switch (action.type) {
     case COMPANY_AND_PRODUCT_LIST_FAILURE:
@@ -36,7 +67,7 @@ const couldFetchProductsAndCompanies = (state = true, action) => {
     default:
       return state;
   }
-}
+};
 
 const isCreatingOrder = (state = false, action) => {
   switch (action.type) {
@@ -109,37 +140,6 @@ const showCompanyRequired = (state = false, action) => {
       return state;
   }
 };
-
-function addProductToOrder(product, quantity, order) {
-  const productIndex = order.findIndex(orderItem => orderItem.product === product);
-  const isProductInOrder = productIndex !== -1;
-
-  if (isProductInOrder) {
-    const oldQuantity = order[productIndex].quantity;
-
-    return [
-      ...order.slice(0, productIndex),
-      { product, quantity: oldQuantity + quantity },
-      ...order.slice(productIndex + 1),
-    ];
-  }
-
-  return [...order, { product, quantity }];
-}
-
-function removeProductFromOrder(product, order) {
-  const productIndex = order.findIndex(orderItem => orderItem.product === product);
-  const isProductInOrder = productIndex !== -1;
-
-  if (isProductInOrder) {
-    return [
-      ...order.slice(0, productIndex),
-      ...order.slice(productIndex + 1),
-    ];
-  }
-
-  return order;
-}
 
 export default combineReducers({
   companies,

@@ -7,11 +7,12 @@ const CompanySelect = ({ companies, onChange, selected, showCompanyRequired }) =
   return (
     <form className="form-inline mb-3">
       <label htmlFor="companySelect" className="col-sm-1 offset-sm-2">Empresa:</label>
-      <select id="companySelect" className={"col-sm-3 custom-select" + (showCompanyRequired ? " border-danger" : "")} value={selected} onChange={onChange}>
-        <option value=''>Selecione uma empresa...</option>
+      <select id="companySelect" className={`col-sm-3 custom-select${showCompanyRequired ? ' border-danger' : ''}`} value={selected} onChange={onChange}>
+        <option value="">Selecione uma empresa...</option>
         {companiesSorted.map(({ name, cnpj }) => <option key={cnpj} value={cnpj}>{name}</option>)}
       </select>
-      {showCompanyRequired && <span className="ml-2 text-danger">É necessário escolher uma empresa</span>}
+      {showCompanyRequired
+        && <span className="ml-2 text-danger">É necessário escolher uma empresa</span>}
     </form>
   );
 };

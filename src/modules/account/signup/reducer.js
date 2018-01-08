@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 import {
   ACCOUNT_CREATION_FAILURE,
   ACCOUNT_CREATION_REQUEST,
-  ACCOUNT_CREATION_SUCCESS
+  ACCOUNT_CREATION_SUCCESS,
 } from './types';
 
 const isFetching = (state = false, action) => {

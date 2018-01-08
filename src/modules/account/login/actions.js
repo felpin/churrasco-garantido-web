@@ -1,20 +1,20 @@
 import { SubmissionError, reset } from 'redux-form';
 import loginInApi from './api';
 import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from './types';
-import { setToken } from '../../../utils/auth'
+import { setToken } from '../../../utils/auth';
 
 
 export const loginRequest = () => ({
-  type: LOGIN_REQUEST
+  type: LOGIN_REQUEST,
 });
 
-export const loginSuccess = (token) => ({
+export const loginSuccess = token => ({
   type: LOGIN_SUCCESS,
-  token
+  token,
 });
 
 export const loginFailure = () => ({
-  type: LOGIN_FAILURE
+  type: LOGIN_FAILURE,
 });
 
 export const login = ({ email, password }) => (dispatch) => {
@@ -45,5 +45,5 @@ export const login = ({ email, password }) => (dispatch) => {
         default:
           throw new SubmissionError({ _error: 'Ocorreu um erro ao realizar a requisição' });
       }
-    })
+    });
 };

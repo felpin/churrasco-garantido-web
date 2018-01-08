@@ -27,4 +27,4 @@ export default (value) => {
 
   cnpjWithSeparations += `-${cnpjNumbers.slice(12, 14)}`;
   return cnpjWithSeparations;
-}
+};

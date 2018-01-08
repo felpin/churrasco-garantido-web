@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 function renderErrorMessage() {
-  return <h3 className='text-center'>Ocorreu um erro ao buscar os pedidos</h3>
+  return <h3 className="text-center">Ocorreu um erro ao buscar os pedidos</h3>;
 }
 
 function renderLoadingMessage() {
-  return <h3 className='text-center'>Carregando pedidos...</h3>
+  return <h3 className="text-center">Carregando pedidos...</h3>;
 }
 
 function renderNoOrderMessage() {
-  return <h3 className='text-center'>Não existem pedidos para esta empresa</h3>
+  return <h3 className="text-center">Não existem pedidos para esta empresa</h3>;
 }
 
 class OrderList extends Component {
@@ -21,7 +21,7 @@ class OrderList extends Component {
   }
 
   componentDidMount() {
-    const cnpj = this.props.match.params.cnpj;
+    const { cnpj } = this.props.match.params;
 
     this.props.getOrders(cnpj);
     this.props.getCompanyName(cnpj);
@@ -47,19 +47,26 @@ class OrderList extends Component {
           {orders.map((orderItem) => {
             const isOrderBeingExcluded = orderBeingExcluded === orderItem.code;
 
-            return (<tr key={orderItem.code}>
-              <td className="text-center align-middle">{orderItem.code}</td>
-              <td className="align-middle">{orderItem.products.map(product => (
-                <div key={product.name}>
-                  <div>{`${product.quantity}x ${product.name}`}</div>
-                </div>
-              ))}</td>
-              <td className="align-middle">
-                <button type="button" className="btn btn-secondary" onClick={() => excludeOrder(orderItem.code)} disabled={isOrderBeingExcluded}>
-                  {isOrderBeingExcluded && <i className="fa fa-spinner fa-spin"></i>}Cancelar
-                </button>
-              </td>
-            </tr>);
+            return (
+              <tr key={orderItem.code}>
+                <td className="text-center align-middle">{orderItem.code}</td>
+                <td className="align-middle">{orderItem.products.map(product => (
+                  <div key={product.name}>
+                    <div>{`${product.quantity}x ${product.name}`}</div>
+                  </div>
+                ))}
+                </td>
+                <td className="align-middle">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => excludeOrder(orderItem.code)}
+                    disabled={isOrderBeingExcluded}
+                  >
+                    {isOrderBeingExcluded && <i className="fa fa-spinner fa-spin" />}Cancelar
+                  </button>
+                </td>
+              </tr>);
           })}
         </tbody>
       </table>
@@ -71,9 +78,11 @@ class OrderList extends Component {
 
     return (
       <div>
-        <h1 className="text-center pt-3">{"Meus Pedidos" + (!!company ? ` - ${company}` : "")}</h1>
+        <h1 className="text-center pt-3">{`Meus Pedidos${company ? ` - ${company}` : ''}`}</h1>
         {isFetchingOrders && renderLoadingMessage()}
-        {!isFetchingOrders && couldFetchOrders && (this.hasOrder() ? this.renderOrders() : renderNoOrderMessage())}
+        {!isFetchingOrders
+          && couldFetchOrders
+          && (this.hasOrder() ? this.renderOrders() : renderNoOrderMessage())}
         {!isFetchingOrders && !couldFetchOrders && renderErrorMessage()}
       </div>
     );
@@ -86,7 +95,6 @@ OrderList.propTypes = {
   excludeOrder: PropTypes.func.isRequired,
   getOrders: PropTypes.func.isRequired,
   getCompanyName: PropTypes.func.isRequired,
-  isExcludingOrder: PropTypes.bool.isRequired,
   isFetchingOrders: PropTypes.bool.isRequired,
   orders: PropTypes.arrayOf(PropTypes.shape({
     code: PropTypes.number.isRequired,
@@ -96,6 +104,11 @@ OrderList.propTypes = {
     })).isRequired,
   })).isRequired,
   orderBeingExcluded: PropTypes.number.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      cnpj: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default OrderList;

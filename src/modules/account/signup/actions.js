@@ -3,21 +3,21 @@ import { toast } from 'react-toastify';
 import {
   ACCOUNT_CREATION_FAILURE,
   ACCOUNT_CREATION_REQUEST,
-  ACCOUNT_CREATION_SUCCESS
+  ACCOUNT_CREATION_SUCCESS,
 } from './types';
 
 import createAccountInApi from './api';
 
 export const signupRequest = () => ({
-  type: ACCOUNT_CREATION_REQUEST
+  type: ACCOUNT_CREATION_REQUEST,
 });
 
 export const signupSuccess = () => ({
-  type: ACCOUNT_CREATION_SUCCESS
+  type: ACCOUNT_CREATION_SUCCESS,
 });
 
 export const signupFailure = () => ({
-  type: ACCOUNT_CREATION_FAILURE
+  type: ACCOUNT_CREATION_FAILURE,
 });
 
 export const signup = ({ email, password }) => (dispatch) => {
@@ -29,7 +29,7 @@ export const signup = ({ email, password }) => (dispatch) => {
         return;
       }
 
-      return response.json().then(error => Promise.reject(error));
+      response.json().then(error => Promise.reject(error));
     })
     .then(() => {
       dispatch(signupSuccess());
@@ -51,5 +51,5 @@ export const signup = ({ email, password }) => (dispatch) => {
         default:
           throw new SubmissionError({ _error: 'Ocorreu um erro ao realizar a requisição' });
       }
-    })
+    });
 };

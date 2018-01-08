@@ -16,7 +16,7 @@ import {
 } from './types';
 
 const orderListRequest = () => ({ type: ORDER_LIST_REQUEST });
-const orderListSuccess = (orders) => ({ type: ORDER_LIST_SUCCESS, orders });
+const orderListSuccess = orders => ({ type: ORDER_LIST_SUCCESS, orders });
 const orderListFailure = () => ({ type: ORDER_LIST_FAILURE });
 
 const orderRemoveRequest = code => ({ type: ORDER_REMOVE_REQUEST, code });
@@ -58,7 +58,7 @@ export const getCompanyName = cnpj => (dispatch) => {
       return response.json().then(() => Promise.reject());
     })
     .then((companies) => {
-      const company = companies.find(company => company.cnpj === cnpj);
+      const company = companies.find(companyUnit => companyUnit.cnpj === cnpj);
 
       if (company) {
         dispatch(getCompanySuccess(company.name));
@@ -88,4 +88,4 @@ export const excludeOrder = code => (dispatch) => {
     .catch(() => {
       dispatch(orderRemoveFailure());
     });
-}
+};

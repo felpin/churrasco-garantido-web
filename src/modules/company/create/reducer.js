@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 import {
   COMPANY_CREATE_FAILURE,
   COMPANY_CREATE_REQUEST,

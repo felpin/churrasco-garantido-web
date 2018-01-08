@@ -7,7 +7,7 @@ const companyCreateFailure = { type: COMPANY_CREATE_FAILURE };
 const companyCreateRequest = { type: COMPANY_CREATE_REQUEST };
 const companyCreateSuccess = { type: COMPANY_CREATE_SUCCESS };
 
-export const createCompany = (companyData) => (dispatch) => {
+export const createCompany = companyData => (dispatch) => {
   dispatch(companyCreateRequest);
 
   const cnpjNumbers = companyData.cnpj.replace(/[^\d]/g, '');
@@ -19,7 +19,7 @@ export const createCompany = (companyData) => (dispatch) => {
         return;
       }
 
-      return response.json().then(error => Promise.reject(error));
+      response.json().then(error => Promise.reject(error));
     })
     .then(() => {
       dispatch(companyCreateSuccess);
