@@ -1,9 +1,9 @@
-export const isAuthenticated = () => {
-  return !!(getToken());
-};
+export const getToken = () => sessionStorage.getItem('token');
+
+export const isAuthenticated = () => !!(getToken());
 
 export const setToken = (token) => {
   sessionStorage.setItem('token', token);
 };
 
-export const getToken = () => sessionStorage.getItem('token');
+export const removeToken = () => sessionStorage.removeItem('token');

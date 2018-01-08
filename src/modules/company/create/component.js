@@ -1,17 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Field, reduxForm, propTypes } from 'redux-form';
 import PropTypes from 'prop-types';
+import { CNPJ } from 'cpf_cnpj';
+import normalizeCnpj from '../../../utils/normalize/cnpj';
 
 const validate = (values) => {
   const errors = {};
 
-  if (!values.email) {
-    errors.email = 'O e-mail é obrigatório';
+  if (!values.name) {
+    errors.name = 'O nome fantasia é obrigatório';
   }
 
-  if (!values.password) {
-    errors.password = 'A senha é obrigatória';
+  if (!values.cnpj) {
+    errors.cnpj = 'O CNPJ é obrigatório';
+  } else if (!CNPJ.isValid(values.cnpj)) {
+    errors.cnpj = 'Este CNPJ é inválido';
   }
 
   return errors;
@@ -30,34 +33,32 @@ const renderField = ({ input, name, label, type, placeholder, meta: { touched, e
 
 renderField.propTypes = { ...propTypes };
 
-const Signup = (props) => {
+const CompanyCreation = (props) => {
   const { handleSubmit, isFetching, error } = props;
 
   return (
     <div className="container">
-      <h2 className="text-center pt-5">Login</h2>
-      <form className="form-signin" onSubmit={handleSubmit}>
+      <h2 className="text-center pt-5">Cadastro de Empresa</h2>
+      <form className="form-company-creation" onSubmit={handleSubmit}>
         <Field
-          name="email"
+          name="name"
           component={renderField}
-          type="email"
-          placeholder="usuario@gmail.com"
-          label="E-mail"
+          type="text"
+          placeholder="Taller"
+          label="Nome fantasia"
         />
         <Field
-          name="password"
+          name="cnpj"
           component={renderField}
-          type="password"
-          placeholder="******"
-          label="Senha"
+          type="text"
+          placeholder="12.819.834/0001-02"
+          label="CNPJ"
+          normalize={normalizeCnpj}
         />
         {error && <span className="text-danger">{error}</span>}
         <div className="d-flex justify-content-center">
-          <Link to="/conta/criar">
-            <button type="button" className="btn btn-link m-3">Nova conta</button>
-          </Link>
           <button type="submit" className="btn btn-primary m-3" disabled={isFetching}>
-            {isFetching && <i className="fa fa-spinner fa-spin" />}Login
+            {isFetching && <i className="fa fa-spinner fa-spin" />}Cadastrar
           </button>
         </div>
       </form>
@@ -65,13 +66,13 @@ const Signup = (props) => {
   );
 };
 
-Signup.propTypes = {
+CompanyCreation.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
 };
 
 export default reduxForm({
-  form: 'login',
+  form: 'companyCreation',
   validate,
-})(Signup);
+})(CompanyCreation);

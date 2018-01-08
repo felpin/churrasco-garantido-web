@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
 import {
-  ACCOUNT_CREATION_FAILURE,
-  ACCOUNT_CREATION_REQUEST,
-  ACCOUNT_CREATION_SUCCESS,
+  COMPANY_CREATE_FAILURE,
+  COMPANY_CREATE_REQUEST,
+  COMPANY_CREATE_SUCCESS,
 } from './types';
 
 const isFetching = (state = false, action) => {
   switch (action.type) {
-    case ACCOUNT_CREATION_FAILURE:
-    case ACCOUNT_CREATION_SUCCESS:
+    case COMPANY_CREATE_FAILURE:
+    case COMPANY_CREATE_SUCCESS:
       return false;
-    case ACCOUNT_CREATION_REQUEST:
+    case COMPANY_CREATE_REQUEST:
       return true;
     default:
       return state;

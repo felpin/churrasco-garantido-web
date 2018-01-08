@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, propTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 import Notification from '../../shared/notification/component';
 
-const validate = values => {
-  const errors = {}
+const validate = (values) => {
+  const errors = {};
   if (!values.email) {
-    errors.email = 'O e-mail é obrigatório'
+    errors.email = 'O e-mail é obrigatório';
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'O e-mail é inválido'
+    errors.email = 'O e-mail é inválido';
   }
 
   if (!values.password) {
@@ -24,13 +24,13 @@ const validate = values => {
   }
 
   if (!values.passwordConfirmation) {
-    errors.passwordConfirmation = 'A confirmação de senha é obrigatória'
+    errors.passwordConfirmation = 'A confirmação de senha é obrigatória';
   } else if (values.password && values.password !== values.passwordConfirmation) {
-    errors.passwordConfirmation = 'A confirmação de senha é diferente da senha'
+    errors.passwordConfirmation = 'A confirmação de senha é diferente da senha';
   }
 
-  return errors
-}
+  return errors;
+};
 
 // TODO: Extract to shared component
 const renderField = ({ input, name, label, type, placeholder, meta: { touched, error } }) => (
@@ -41,7 +41,9 @@ const renderField = ({ input, name, label, type, placeholder, meta: { touched, e
       {touched && error && <span className="text-danger">{error}</span>}
     </div>
   </div>
-)
+);
+
+renderField.propTypes = { ...propTypes };
 
 const Signup = (props) => {
   const { handleSubmit, isFetching, error } = props;
@@ -50,16 +52,34 @@ const Signup = (props) => {
     <div className="container">
       <h2 className="text-center pt-5">Novo Cadastro</h2>
       <form className="form-signin" onSubmit={handleSubmit}>
-        <Field name="email" component={renderField} type="email" placeholder="usuario@gmail.com" label="E-mail" />
-        <Field name="password" component={renderField} type="password" placeholder="******" label="Senha" />
-        <Field name="passwordConfirmation" component={renderField} type="password" placeholder="******" label="Repetir senha" />
+        <Field
+          name="email"
+          component={renderField}
+          type="email"
+          placeholder="usuario@gmail.com"
+          label="E-mail"
+        />
+        <Field
+          name="password"
+          component={renderField}
+          type="password"
+          placeholder="******"
+          label="Senha"
+        />
+        <Field
+          name="passwordConfirmation"
+          component={renderField}
+          type="password"
+          placeholder="******"
+          label="Repetir senha"
+        />
         {error && <span className="text-danger">{error}</span>}
         <div className="d-flex justify-content-center">
           <Link to="/login">
             <button type="button" className="btn btn-secondary m-3">Cancelar</button>
           </Link>
           <button type="submit" className="btn btn-primary m-3" disabled={isFetching}>
-            {isFetching && <i class="fa fa-spinner fa-spin"></i>}Cadastrar
+            {isFetching && <i className="fa fa-spinner fa-spin" />}Cadastrar
           </button>
         </div>
       </form>
@@ -70,7 +90,8 @@ const Signup = (props) => {
 
 Signup.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired
+  isFetching: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 export default reduxForm({

@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 import {
   SUMMARY_FAILURE,
   SUMMARY_REQUEST,
@@ -26,7 +26,7 @@ const summary = (state = [], action) => {
     default:
       return state;
   }
-}
+};
 
 const couldFetch = (state = true, action) => {
   switch (action.type) {
@@ -38,7 +38,7 @@ const couldFetch = (state = true, action) => {
     default:
       return state;
   }
-}
+};
 
 export default combineReducers({ isFetching, summary, couldFetch });
 
